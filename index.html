@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CHANGE: the browser tab title -->
+  <title>For Deepanshu ♡</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+
+  <!-- Floating hearts and sparkles are added here by script.js -->
+  <div id="floaters" aria-hidden="true"></div>
+
+  <!-- Music button (mute / unmute) -->
+  <button id="musicBtn" class="music-btn" aria-label="Toggle music" title="Music on/off">🔇</button>
+
+  <!-- =============== TEDDY TEMPLATE (reused 3 times by script.js) =============== -->
+  <template id="teddyTpl">
+    <div class="teddy">
+      <svg viewBox="0 0 200 220" role="img" aria-label="A cute little teddy bear">
+        <ellipse cx="62" cy="202" rx="24" ry="13" fill="#8a5a3c"/>
+        <ellipse cx="138" cy="202" rx="24" ry="13" fill="#8a5a3c"/>
+        <ellipse cx="100" cy="152" rx="50" ry="54" fill="#a66f4b"/>
+        <ellipse cx="100" cy="160" rx="30" ry="35" fill="#f3d9b8"/>
+        <path class="belly-heart" d="M100 176 C84 162 84 148 94 148 C98 148 100 152 100 154 C100 152 102 148 106 148 C116 148 116 162 100 176Z" fill="#ff5d8f"/>
+        <g class="arm arm-l"><ellipse cx="54" cy="148" rx="15" ry="30" transform="rotate(20 54 148)" fill="#a66f4b"/></g>
+        <g class="arm arm-r"><ellipse cx="146" cy="148" rx="15" ry="30" transform="rotate(-20 146 148)" fill="#a66f4b"/></g>
+        <g class="head">
+          <circle cx="62" cy="38" r="17" fill="#a66f4b"/><circle cx="62" cy="38" r="9" fill="#ffb3c7"/>
+          <circle cx="138" cy="38" r="17" fill="#a66f4b"/><circle cx="138" cy="38" r="9" fill="#ffb3c7"/>
+          <circle cx="100" cy="76" r="46" fill="#a66f4b"/>
+          <ellipse cx="100" cy="92" rx="20" ry="15" fill="#f3d9b8"/>
+          <ellipse cx="100" cy="85" rx="7" ry="5" fill="#4a2c1a"/>
+          <path d="M92 96 Q100 104 108 96" stroke="#4a2c1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle class="eye" cx="82" cy="70" r="5.5" fill="#2b1a10"/>
+          <circle class="eye" cx="118" cy="70" r="5.5" fill="#2b1a10"/>
+          <circle cx="80" cy="68" r="1.8" fill="#fff"/><circle cx="116" cy="68" r="1.8" fill="#fff"/>
+          <circle cx="68" cy="90" r="8" fill="#ff8fb0" opacity=".65"/>
+          <circle cx="132" cy="90" r="8" fill="#ff8fb0" opacity=".65"/>
+        </g>
+        <!-- Big heart, only visible on the final teddy -->
+        <path class="held-heart" d="M100 190 C70 168 70 138 90 138 C96 138 100 144 100 148 C100 144 104 138 110 138 C130 138 130 168 100 190Z" fill="#ff4d7e" stroke="#fff" stroke-width="3"/>
+      </svg>
+    </div>
+  </template>
+
+  <!-- =============== 1. WELCOME SCREEN =============== -->
+  <section id="welcome" class="welcome">
+    <div class="teddy-slot" data-teddy="wave"></div>
+    <h1 class="script big">Hey You!</h1>
+    <p class="welcome-text">Someone made a little world just for you...</p>
+    <button id="enterBtn" class="glow-btn">Come Inside ♡</button>
+  </section>
+
+  <!-- =============== MAIN WEBSITE =============== -->
+  <main id="main" class="main hidden">
+
+    <nav class="nav">
+      <a href="#teddySection">Teddy</a>
+      <a href="#letterSection">Letter</a>
+      <a href="#openWhen">Open When</a>
+      <a href="#finalSection">Surprise</a>
+    </nav>
+
+    <!-- 2. MINI TEDDY -->
+    <section id="teddySection" class="section">
+      <div class="bubble">hey lovieee... I have something to tell you!</div>
+      <div class="teddy-slot" id="mainTeddy" data-teddy="wave"></div>
+      <button id="hugBtn" class="glow-btn">Give Teddy a Hug</button>
+      <p id="hugMsg" class="hug-msg"></p>
+    </section>
+
+    <!-- 3. LOVE CONFESSION -->
+    <section id="letterSection" class="section">
+      <h2 class="script">A little envelope for you</h2>
+      <p class="hint" id="envHint">Tap the envelope to open it 💌</p>
+      <div id="envelope" class="envelope" role="button" tabindex="0" aria-label="Open the envelope">
+        <div class="env-back"></div>
+        <div class="env-paper">♡</div>
+        <div class="env-front"></div>
+        <div class="env-flap"></div>
+        <div class="env-seal">♥</div>
+      </div>
+
+      <article id="loveLetter" class="paper hidden">
+        <h3 class="script">There's Something I've Been Meaning to Tell You...</h3>
+        <div id="letterBody"></div>
+      </article>
+    </section>
+
+    <!-- 4. RESPONSE -->
+    <section id="response" class="section hidden">
+      <h2 class="script">So... what does your heart say?</h2>
+      <p class="hint">Only one of these buttons wants to be clicked... guess which 😏</p>
+      <div class="btn-row">
+        <button id="yesBtn" class="glow-btn">Yes, I'd Love To! ❤️</button>
+        <span id="noWrap" class="no-wrap"><button id="noBtn" class="glow-btn soft no-btn">No 😢</button></span>
+      </div>
+      <p id="answerMsg" class="answer-msg"></p>
+      <!-- Shown only after he clicks YES -->
+      <div id="dmNote" class="dm-note hidden">
+        <p>Sooo baby… wanna get a little naughty in private? 😏💋
+
+Got something you wanna ask me? Maybe wanna see some of my pictures? 🤭
+
+No shyness, handsome… let's keep our little secrets in DMs. 🔥😘</p>
+        <a id="dmBtn" class="glow-btn" target="_blank" rel="noopener">Slide Into My DMs 💌</a>
+      </div>
+    </section>
+
+    <!-- 5. OPEN WHEN -->
+    <section id="openWhen" class="section">
+      <h2 class="script">Open When...</h2>
+      <p class="hint">Pick a card whenever you need it ♡</p>
+      <div id="cardGrid" class="card-grid"></div>
+    </section>
+
+    <!-- 7. FINAL SURPRISE -->
+    <section id="finalSection" class="section final">
+      <div class="teddy-slot" id="finalTeddy" data-teddy="hold"></div>
+      <p id="finalText" class="final-text script"></p>
+      <button id="moreHearts" class="glow-btn">Send More Hearts 💗</button>
+    </section>
+
+    <footer class="footer">Made with lots of love ♡</footer>
+  </main>
+
+  <!-- POPUP (used by the Open When cards) -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button id="modalClose" class="modal-close" aria-label="Close">✕</button>
+      <div id="modalIcon" class="modal-icon"></div>
+      <h3 id="modalTitle" class="script"></h3>
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
